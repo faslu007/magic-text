@@ -114,6 +114,37 @@ function WelcomeScreen({ onCreateNew }) {
                         <div className="feature-icon-wrapper">
                             <div className="feature-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div className="feature-text">
+                            <h3>Encrypted</h3>
+                            <p>End-to-end encryption protects your sensitive information</p>
+                        </div>
+                    </div>
+
+                    <div className="welcome-feature">
+                        <div className="feature-icon-wrapper">
+                            <div className="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                                    <polyline points="16 6 12 2 8 6"></polyline>
+                                    <line x1="12" y1="2" x2="12" y2="15"></line>
+                                </svg>
+                            </div>
+                        </div>
+                        <div className="feature-text">
+                            <h3>Controlled Sharing</h3>
+                            <p>IP-based file sharing with rate-limited viewership</p>
+                        </div>
+                    </div>
+
+                    <div className="welcome-feature">
+                        <div className="feature-icon-wrapper">
+                            <div className="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <circle cx="12" cy="12" r="10"></circle>
                                     <line x1="12" y1="8" x2="12" y2="12"></line>
                                     <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -123,21 +154,6 @@ function WelcomeScreen({ onCreateNew }) {
                         <div className="feature-text">
                             <h3>Simple</h3>
                             <p>Clean interface focused on your writing experience</p>
-                        </div>
-                    </div>
-
-                    <div className="welcome-feature">
-                        <div className="feature-icon-wrapper">
-                            <div className="feature-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                                </svg>
-                            </div>
-                        </div>
-                        <div className="feature-text">
-                            <h3>Smart</h3>
-                            <p>Auto-save, creative titles, and intuitive organization</p>
                         </div>
                     </div>
                 </div>

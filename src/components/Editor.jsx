@@ -1,9 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setActiveEntity, closeTab } from '../redux/features/editorSlice';
+import { setActiveEntity, closeTab, createEntity } from '../redux/features/editorSlice';
 import Sidebar from './Sidebar';
 import TextEditor from './TextEditor';
 import WelcomeScreen from './WelcomeScreen';
 import './Editor.css';
+import { generateCreativeTitle } from '../utils';
 
 function Editor() {
   const dispatch = useDispatch();
@@ -24,11 +25,15 @@ function Editor() {
     dispatch(closeTab(id));
   };
   
+  const handleCreateNew = () => {
+    dispatch(createEntity({ name: generateCreativeTitle() }));
+  };
+
   // Get the open tab entities with null check
   const tabEntities = Array.isArray(openTabs) 
     ? openTabs
         .map(id => entities.find(entity => entity.id === id))
-        .filter(Boolean) // Filter out any undefined entities
+      .filter(Boolean)
     : [];
   
   return (
@@ -37,7 +42,7 @@ function Editor() {
       <div className="editor-container">
 
         {tabEntities.length === 0 && (
-          <WelcomeScreen />
+          <WelcomeScreen onCreateNew={handleCreateNew} />
         )}
         {tabEntities.length > 0 && (
           <div className="editor-tabs">

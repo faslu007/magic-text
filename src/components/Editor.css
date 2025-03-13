@@ -753,22 +753,25 @@ button {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 40px;
-  margin: 20px 0 40px;
+  gap: 25px;
+  margin: 20px 0 30px;
+  width: 100%;
+  max-width: 1000px;
 }
 
 .welcome-feature {
   flex: 1;
-  min-width: 220px;
-  max-width: 280px;
+  min-width: 200px;
+  max-width: 240px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 30px 20px;
+  padding: 25px 15px;
   border-radius: 12px;
   transition: all 0.3s ease;
   position: relative;
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   background-color: rgba(30, 31, 28, 0.2);
 }
@@ -985,12 +988,29 @@ button {
   }
   
   .welcome-features {
-    gap: 20px;
+    gap: 15px;
+    margin: 15px 0 25px;
   }
   
   .welcome-feature {
-    min-width: 100%;
-    padding: 20px 15px;
+    min-width: calc(50% - 20px);
+    max-width: calc(50% - 20px);
+    padding: 15px 10px;
+  }
+  
+  .feature-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+  }
+  
+  .feature-text h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+  
+  .feature-text p {
+    font-size: 0.9rem;
   }
   
   .welcome-actions {
@@ -1003,6 +1023,13 @@ button {
   
   .welcome-button {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-feature {
+    min-width: 100%;
+    max-width: 100%;
   }
 }
 
@@ -1061,4 +1088,57 @@ button {
     left: 10px;
     font-size: 0.8rem;
   }
+}
+
+/* Delete Button */
+.delete-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  z-index: 10;
+  color: #e74c3c;
+}
+
+.delete-button:hover {
+  opacity: 1;
+  background-color: rgba(231, 76, 60, 0.1);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.entity-list-item:hover .delete-button {
+  opacity: 0.9;
+}
+
+.editor-app.dark .delete-button {
+  color: #e74c3c;
+}
+
+.editor-app.light .delete-button {
+  color: #e74c3c;
+}
+
+/* Delete Modal */
+.editor-app.dark .modal-button-delete {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+}
+
+.editor-app.light .modal-button-delete {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
 } 

@@ -1,40 +1,13 @@
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createEntity, setActiveEntity, deleteEntity, toggleTheme } from '../redux/features/editorSlice';
-import { formatDistanceToNow } from 'date-fns';
+import { generateCreativeTitle } from '../utils';
 
 function Sidebar() {
   const dispatch = useDispatch();
-  const editorState = useSelector((state) => state.editor);
-  
-  // Safely extract values with fallbacks
-  const entities = editorState?.entities || [];
-  const activeEntityId = editorState?.activeEntityId || null;
-  const theme = editorState?.theme || 'dark';
-  
-  const generateCreativeTitle = () => {
-    const now = new Date();
-    const hour = now.getHours();
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const date = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    
-    // Time-based prefixes
-    let timePrefix = '';
-    if (hour < 6) timePrefix = 'Night Owl';
-    else if (hour < 12) timePrefix = 'Morning Muse';
-    else if (hour < 17) timePrefix = 'Afternoon Thoughts';
-    else if (hour < 21) timePrefix = 'Evening Notes';
-    else timePrefix = 'Night Reflections';
-    
-    // Random creative suffixes
-    const creativeSuffixes = [
-      'Inspiration', 'Ideas', 'Brainstorm', 'Thoughts', 'Journal', 
-      'Draft', 'Concept', 'Vision', 'Plan', 'Notes', 'Musings'
-    ];
-    
-    const randomSuffix = creativeSuffixes[Math.floor(Math.random() * creativeSuffixes.length)];
-    
-    return `${timePrefix} - ${date} at ${hour}:${minutes} - ${randomSuffix}`;
-  };
+  const { entities, activeEntityId, theme } = useSelector((state) => state.editor);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [entityToDelete, setEntityToDelete] = useState(null);
   
   const handleCreateEntity = () => {
     dispatch(createEntity({ name: generateCreativeTitle() }));
@@ -46,23 +19,27 @@ function Sidebar() {
   
   const handleDeleteEntity = (e, id) => {
     e.stopPropagation();
-    if (window.confirm('Are you sure you want to delete this document?')) {
-      dispatch(deleteEntity(id));
-    }
+    setEntityToDelete(id);
+    setShowDeleteModal(true);
   };
   
   const handleToggleTheme = () => {
     dispatch(toggleTheme());
   };
   
-  const formatDate = (dateString) => {
-    try {
-      return formatDistanceToNow(new Date(dateString), { addSuffix: true });
-    } catch {
-      return 'Invalid date';
+  const confirmDelete = () => {
+    if (entityToDelete) {
+      dispatch(deleteEntity(entityToDelete));
+      setShowDeleteModal(false);
+      setEntityToDelete(null);
     }
   };
-  
+
+  const cancelDelete = () => {
+    setShowDeleteModal(false);
+    setEntityToDelete(null);
+  };
+
   return (
     <div className="sidebar">
       <div className="toolbar">
@@ -84,21 +61,46 @@ function Sidebar() {
               key={entity.id}
               className={`entity-list-item ${entity.id === activeEntityId ? 'active' : ''}`}
               onClick={() => handleSelectEntity(entity.id)}
+              style={{ position: 'relative' }}
             >
               <div className="entity-name">{entity.name}</div>
               <div className="entity-date">
-                Modified {formatDate(entity.modifiedAt)}
+                {new Date(entity.modifiedAt).toLocaleString()}
               </div>
-              <button 
+              <button
+                className="delete-button"
                 onClick={(e) => handleDeleteEntity(e, entity.id)}
-                style={{ float: 'right', marginTop: '-20px' }}
+                title="Delete document"
               >
-                🗑️
+                ×
               </button>
             </li>
           ))
         )}
       </ul>
+
+      {showDeleteModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Confirm Delete</h3>
+            <p>Are you sure you want to delete this document? This action cannot be undone.</p>
+            <div className="modal-buttons">
+              <button
+                className="modal-button modal-button-cancel"
+                onClick={cancelDelete}
+              >
+                Cancel
+              </button>
+              <button
+                className="modal-button modal-button-apply modal-button-delete"
+                onClick={confirmDelete}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
