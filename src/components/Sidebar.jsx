@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createEntity, setActiveEntity, deleteEntity, toggleTheme } from '../redux/features/editorSlice';
 import { generateCreativeTitle } from '../utils';
+import { formatDistanceToNow } from 'date-fns';
 
 function Sidebar() {
   const dispatch = useDispatch();
@@ -40,6 +41,14 @@ function Sidebar() {
     setEntityToDelete(null);
   };
 
+  const formatDate = (dateString) => {
+    try {
+      return formatDistanceToNow(new Date(dateString), { addSuffix: true });
+    } catch {
+      return 'Invalid date';
+    }
+  };
+
   return (
     <div className="sidebar">
       <div className="toolbar">
@@ -65,14 +74,14 @@ function Sidebar() {
             >
               <div className="entity-name">{entity.name}</div>
               <div className="entity-date">
-                {new Date(entity.modifiedAt).toLocaleString()}
+                Modified {formatDate(entity.modifiedAt)}
               </div>
               <button
                 className="delete-button"
                 onClick={(e) => handleDeleteEntity(e, entity.id)}
                 title="Delete document"
               >
-                ×
+                🗑️
               </button>
             </li>
           ))
