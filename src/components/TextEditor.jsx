@@ -142,15 +142,15 @@ function TextEditor() {
     };
   }, [saveTimeout]);
   
-  if (!activeEntity) {
-    return (
-      <div className="editor-main">
-        <div className="empty-state">
-          <p>Select a document from the sidebar or create a new one</p>
-        </div>
-      </div>
-    );
-  }
+  // if (!activeEntity) {
+  //   return (
+  //     <div className="editor-main">
+  //       <div className="empty-state">
+  //         <p>Select a document from the sidebar or create a new one</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
   
   return (
     <div className="editor-main">

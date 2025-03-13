@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setActiveEntity, closeTab } from '../redux/features/editorSlice';
 import Sidebar from './Sidebar';
 import TextEditor from './TextEditor';
+import WelcomeScreen from './WelcomeScreen';
 import './Editor.css';
 
 function Editor() {
@@ -34,6 +35,10 @@ function Editor() {
     <div className={`editor-app ${theme}`}>
       <Sidebar />
       <div className="editor-container">
+
+        {tabEntities.length === 0 && (
+          <WelcomeScreen />
+        )}
         {tabEntities.length > 0 && (
           <div className="editor-tabs">
             {tabEntities.map(entity => (

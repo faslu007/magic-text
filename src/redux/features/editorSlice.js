@@ -38,16 +38,40 @@ export const editorSlice = createSlice({
       }
     },
     deleteEntity: (state, action) => {
-      const index = state.entities.findIndex(entity => entity.id === action.payload);
-      if (index !== -1) {
-        state.entities.splice(index, 1);
-        
+      const entityId = action.payload;
+      const entityIndex = state.entities.findIndex(entity => entity.id === entityId);
+
+      if (entityIndex !== -1) {
+        // Remove the entity
+        state.entities.splice(entityIndex, 1);
+
+        // Find the index in openTabs before removing
+        const tabIndex = state.openTabs.findIndex(id => id === entityId);
+
         // Remove from open tabs
-        state.openTabs = state.openTabs.filter(id => id !== action.payload);
-        
-        if (state.activeEntityId === action.payload) {
-          // Set active to the next available tab or null
-          state.activeEntityId = state.openTabs.length > 0 ? state.openTabs[0] : null;
+        state.openTabs = state.openTabs.filter(id => id !== entityId);
+
+        // If the deleted entity was the active tab, select a new active tab
+        if (state.activeEntityId === entityId) {
+          if (state.openTabs.length > 0) {
+            // Try to select the tab to the left
+            let newIndex = tabIndex - 1;
+
+            // If left tab doesn't exist (index would be -1) or tab wasn't found,
+            // try right tab or adjust accordingly
+            if (newIndex < 0) {
+              // If we were at the first tab, select what would be the next tab (index 0 after removal)
+              newIndex = 0;
+            } else if (newIndex >= state.openTabs.length) {
+              // If we were at the last tab, select the new last tab
+              newIndex = state.openTabs.length - 1;
+            }
+
+            state.activeEntityId = state.openTabs[newIndex];
+          } else {
+            // No tabs left after closing
+            state.activeEntityId = null;
+          }
         }
       }
     },
@@ -60,14 +84,32 @@ export const editorSlice = createSlice({
       }
     },
     closeTab: (state, action) => {
+      const closingTabId = action.payload;
+      const currentIndex = state.openTabs.findIndex(id => id === closingTabId);
+
       // Remove from open tabs
       state.openTabs = state.openTabs.filter(id => id !== action.payload);
-      
+
       // If closing the active tab, switch to another tab
-      if (state.activeEntityId === action.payload && state.openTabs.length > 0) {
-        state.activeEntityId = state.openTabs[0];
-      } else if (state.openTabs.length === 0) {
-        state.activeEntityId = null;
+      if (state.activeEntityId === closingTabId) {
+        if (state.openTabs.length > 0) {
+          // Try to select the tab to the left
+          let newIndex = currentIndex - 1;
+
+          // If left tab doesn't exist (index would be -1), try right tab
+          if (newIndex < 0) {
+            newIndex = currentIndex; // If currentIndex was 0, this will now point to 0
+            // If there was only one tab (now 0 after removal), newIndex will be 0
+            if (newIndex >= state.openTabs.length) {
+              newIndex = state.openTabs.length - 1; // Take last available tab
+            }
+          }
+
+          state.activeEntityId = state.openTabs[newIndex];
+        } else {
+          // No tabs left after closing
+          state.activeEntityId = null;
+        }
       }
     },
     toggleTheme: (state) => {
