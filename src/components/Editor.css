@@ -160,7 +160,6 @@
 .entity-list-container {
   flex: 1;
   overflow: hidden;
-  padding: 0 var(--sidebar-padding);
 }
 
 .entity-list {
@@ -1203,4 +1202,185 @@ button {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: calc(var(--mobile-sidebar-z-index) - 1);
+}
+
+/* Sidebar Bottom Toolbar */
+.sidebar-bottom-toolbar {
+  padding: 10px var(--sidebar-padding);
+  border-top: 1px solid var(--light-border);
+  margin-top: auto;
+}
+
+.editor-app.dark .sidebar-bottom-toolbar {
+  border-top: 1px solid var(--dark-border);
+}
+
+.sidebar-bottom-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar-auth-btn, 
+.sidebar-theme-btn {
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sidebar-auth-btn:hover, 
+.sidebar-theme-btn:hover {
+  transform: scale(1.1);
+  background-color: rgba(102, 217, 239, 0.1);
+}
+
+.editor-app.light .sidebar-auth-btn:hover, 
+.editor-app.light .sidebar-theme-btn:hover {
+  background-color: rgba(13, 153, 229, 0.1);
+}
+
+/* Responsive adjustments for sidebar bottom toolbar */
+@media (max-width: 768px) {
+  .sidebar-bottom-toolbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--light-sidebar-bg);
+    z-index: var(--mobile-sidebar-z-index);
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .editor-app.dark .sidebar-bottom-toolbar {
+    background-color: var(--dark-sidebar-bg);
+  }
+  
+  .entity-list-container.mobile {
+    height: calc(100% - var(--mobile-toggle-size) - 52px);
+  }
+}
+
+/* Sidebar Tabs - Shadcn UI inspired */
+.sidebar-tabs-container {
+  padding: 0 var(--sidebar-padding);
+  margin-bottom: 12px;
+}
+
+.sidebar-tabs {
+  display: inline-flex;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  padding: 2px;
+  position: relative;
+  width: auto;
+  margin: 0 auto;
+}
+
+.editor-app.dark .sidebar-tabs {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-tab {
+  position: relative;
+  height: 100%;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  color: var(--light-text);
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.editor-app.dark .sidebar-tab {
+  color: var(--dark-text);
+}
+
+.sidebar-tab:hover {
+  opacity: 0.9;
+}
+
+.sidebar-tab.active {
+  opacity: 1;
+  color: var(--light-text);
+}
+
+.editor-app.dark .sidebar-tab.active {
+  color: var(--dark-text);
+}
+
+.sidebar-tab.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--light-bg);
+  border-radius: 4px;
+  z-index: -1;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.editor-app.dark .sidebar-tab.active::before {
+  background-color: var(--dark-bg);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-tab-content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--sidebar-padding);
+}
+
+/* Shared Documents Placeholder */
+.shared-documents-placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.shared-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.7;
+}
+
+.shared-icon {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.shared-empty-state h3 {
+  margin: 0 0 10px;
+  font-weight: 500;
+}
+
+.shared-empty-state p {
+  margin: 0;
+  font-size: 14px;
 } 

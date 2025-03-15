@@ -12,6 +12,7 @@ function Sidebar() {
   const [entityToDelete, setEntityToDelete] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [activeTab, setActiveTab] = useState('mine'); // 'mine' or 'shared'
 
   // Clerk authentication
   const { isLoaded, isSignedIn } = useAuth();
@@ -108,50 +109,95 @@ function Sidebar() {
               {sidebarVisible ? 'Hide List' : 'Show List'}
             </button>
           )}
+        </div>
+      </div>
+
+      {/* Entity list - toggleable on mobile */}
+      <div className={entityListClasses}>
+        {/* Tab navigation */}
+        <div className="sidebar-tabs-container">
+          <div className="sidebar-tabs">
+            <button 
+              className={`sidebar-tab ${activeTab === 'mine' ? 'active' : ''}`}
+              onClick={() => setActiveTab('mine')}
+            >
+              Mine
+            </button>
+            <button
+              className={`sidebar-tab ${activeTab === 'shared' ? 'active' : ''}`}
+              onClick={() => setActiveTab('shared')}
+            >
+              Shared
+            </button>
+          </div>
+        </div>
+
+        {/* Tab content */}
+        <div className="sidebar-tab-content">
+          {/* Mine Tab */}
+          {activeTab === 'mine' && (
+            <ul className="entity-list">
+              {entities.length === 0 ? (
+                <li className="entity-list-item">
+                  <div className="entity-name">No documents</div>
+                  <div className="entity-date">Create a new document to get started</div>
+                </li>
+              ) : (
+                entities.map((entity) => (
+                  <li
+                    key={entity.id}
+                    className={`entity-list-item ${entity.id === activeEntityId ? 'active' : ''}`}
+                    onClick={() => handleSelectEntity(entity.id)}
+                    style={{ position: 'relative' }}
+                  >
+                    <div className="entity-name">{entity.name}</div>
+                    <div className="entity-date">
+                      Modified {formatDate(entity.modifiedAt)}
+                    </div>
+                    <button
+                      className="delete-button"
+                      onClick={(e) => handleDeleteEntity(e, entity.id)}
+                      title="Delete document"
+                    >
+                      🗑️
+                    </button>
+                  </li>
+                ))
+              )}
+            </ul>
+          )}
+
+          {/* Shared Tab */}
+          {activeTab === 'shared' && (
+            <div className="shared-documents-placeholder">
+              <div className="shared-empty-state">
+                <div className="shared-icon">🔄</div>
+                <h3>Shared Documents</h3>
+                <p>Documents shared with you will appear here.</p>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Sidebar bottom toolbar */}
+      <div className="sidebar-bottom-toolbar">
+        <div className="sidebar-bottom-actions">
           <button
             onClick={handleAuth}
-            className="auth-toggle"
+            className="sidebar-auth-btn"
             title={isSignedIn ? "User profile" : "Sign in"}
           >
             👤
           </button>
-          <button onClick={handleToggleTheme} className="theme-toggle">
+          <button
+            onClick={handleToggleTheme}
+            className="sidebar-theme-btn"
+            title={theme === 'dark' ? "Switch to light mode" : "Switch to dark mode"}
+          >
             {theme === 'dark' ? '☀️' : '🌙'}
           </button>
         </div>
-      </div>
-      
-      {/* Entity list - toggleable on mobile */}
-      <div className={entityListClasses}>
-        <ul className="entity-list">
-          {entities.length === 0 ? (
-            <li className="entity-list-item">
-              <div className="entity-name">No documents</div>
-              <div className="entity-date">Create a new document to get started</div>
-            </li>
-          ) : (
-            entities.map((entity) => (
-              <li
-                key={entity.id}
-                className={`entity-list-item ${entity.id === activeEntityId ? 'active' : ''}`}
-                onClick={() => handleSelectEntity(entity.id)}
-                style={{ position: 'relative' }}
-              >
-                <div className="entity-name">{entity.name}</div>
-                <div className="entity-date">
-                  Modified {formatDate(entity.modifiedAt)}
-                </div>
-                <button
-                  className="delete-button"
-                  onClick={(e) => handleDeleteEntity(e, entity.id)}
-                  title="Delete document"
-                >
-                  🗑️
-                </button>
-              </li>
-            ))
-          )}
-        </ul>
       </div>
 
       {showDeleteModal && (
