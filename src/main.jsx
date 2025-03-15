@@ -10,6 +10,7 @@ import { registerServiceWorker } from './pwa'
 // Register the service worker for offline support
 registerServiceWorker();
 
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
@@ -17,5 +18,5 @@ createRoot(document.getElementById('root')).render(
         <App />
       </PersistGate>
     </Provider>
-  </StrictMode>,
-)
+  </StrictMode>
+);

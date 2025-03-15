@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createEntity, setActiveEntity, deleteEntity, toggleTheme } from '../redux/features/editorSlice';
 import { generateCreativeTitle } from '../utils';
 import { formatDistanceToNow } from 'date-fns';
+import { useAuth, useClerk } from '@clerk/clerk-react';
 
 function Sidebar() {
   const dispatch = useDispatch();
@@ -11,6 +12,10 @@ function Sidebar() {
   const [entityToDelete, setEntityToDelete] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [sidebarVisible, setSidebarVisible] = useState(false);
+
+  // Clerk authentication
+  const { isLoaded, isSignedIn } = useAuth();
+  const clerk = useClerk();
 
   // Handle window resize to detect mobile view
   useEffect(() => {
@@ -54,6 +59,16 @@ function Sidebar() {
     setSidebarVisible(!sidebarVisible);
   };
 
+  const handleAuth = () => {
+    if (!isLoaded) return;
+
+    if (isSignedIn) {
+      clerk.openUserProfile();
+    } else {
+      clerk.openSignIn();
+    }
+  };
+
   const confirmDelete = () => {
     if (entityToDelete) {
       dispatch(deleteEntity(entityToDelete));
@@ -93,6 +108,13 @@ function Sidebar() {
               {sidebarVisible ? 'Hide List' : 'Show List'}
             </button>
           )}
+          <button
+            onClick={handleAuth}
+            className="auth-toggle"
+            title={isSignedIn ? "User profile" : "Sign in"}
+          >
+            👤
+          </button>
           <button onClick={handleToggleTheme} className="theme-toggle">
             {theme === 'dark' ? '☀️' : '🌙'}
           </button>
