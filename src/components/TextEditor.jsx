@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateEntity } from '../redux/features/editorSlice';
 import { formatDistanceToNow } from 'date-fns';
+import EditorJSComponent from './EditorJS/EditorJS';
+import './TextEditor.css';
 
 function TextEditor() {
   const dispatch = useDispatch();
@@ -10,6 +12,7 @@ function TextEditor() {
   // Safely extract values with fallbacks
   const entities = editorState?.entities || [];
   const activeEntityId = editorState?.activeEntityId || null;
+  const theme = editorState?.theme || 'dark';
   
   const [localName, setLocalName] = useState('');
   const [localContent, setLocalContent] = useState('');
@@ -251,12 +254,12 @@ function TextEditor() {
             </div>
           </div>
         </div>
-        <textarea
-          className="editor-textarea"
-          value={localContent}
-          onChange={handleContentChange}
-          placeholder="Start typing..."
-        />
+        <div className={`editor-container ${theme}`}>
+          <EditorJSComponent
+            value={localContent}
+            onChange={handleContentChange}
+          />
+        </div>
       </div>
       
       {/* Password Modal */}

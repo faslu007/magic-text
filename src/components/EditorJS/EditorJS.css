@@ -1,0 +1,157 @@
+.editorjs-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.editorjs-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 25px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+/* Dark theme styles */
+.dark .editorjs-container {
+  color: #e0e0e0;
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+}
+
+/* Light theme styles */
+.light .editorjs-container {
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+/* Editor.js specific styles */
+.codex-editor__redactor {
+  padding-bottom: 100px !important;
+}
+
+/* Header styles */
+.ce-header {
+  font-weight: bold;
+  margin: 1em 0;
+}
+
+.ce-header h1 {
+  font-size: 2em;
+}
+
+.ce-header h2 {
+  font-size: 1.5em;
+}
+
+.ce-header h3 {
+  font-size: 1.17em;
+}
+
+.ce-header h4 {
+  font-size: 1em;
+}
+
+/* Code block styles */
+.ce-code {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.dark .ce-code {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+}
+
+/* List styles */
+.cdx-list {
+  margin: 0;
+  padding-left: 40px;
+}
+
+.cdx-list__item {
+  padding: 5px 0;
+}
+
+/* Marker styles */
+.cdx-marker {
+  background: rgba(245, 235, 111, 0.29);
+  padding: 3px 0;
+}
+
+.dark .cdx-marker {
+  background: rgba(255, 255, 0, 0.15);
+}
+
+/* Inline code styles */
+.inline-code {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  background-color: #f5f5f5;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+.dark .inline-code {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+}
+
+/* Toolbar styles */
+.ce-toolbar__content {
+  max-width: 100% !important;
+}
+
+.ce-block__content {
+  max-width: 100% !important;
+}
+
+/* Drag handle styles */
+.ce-block--selected .ce-block__content {
+  background-color: rgba(46, 170, 220, 0.08);
+}
+
+.dark .ce-block--selected .ce-block__content {
+  background-color: rgba(46, 170, 220, 0.15);
+}
+
+.ce-toolbar__plus,
+.ce-toolbar__settings-btn {
+  color: #707684;
+}
+
+.dark .ce-toolbar__plus,
+.dark .ce-toolbar__settings-btn {
+  color: #a0a0a0;
+}
+
+.ce-toolbar__plus:hover,
+.ce-toolbar__settings-btn:hover {
+  color: #388ae5;
+}
+
+/* Fix for toolbar in dark mode */
+.dark .ce-toolbar,
+.dark .ce-block--selected {
+  --color-background-item-hover: rgba(255, 255, 255, 0.05);
+  --color-background-item-active: rgba(255, 255, 255, 0.1);
+}
+
+/* Placeholder text */
+.ce-paragraph[data-placeholder]:empty::before {
+  color: #707684;
+}
+
+.dark .ce-paragraph[data-placeholder]:empty::before {
+  color: #a0a0a0;
+} 
