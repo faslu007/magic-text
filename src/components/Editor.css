@@ -1383,4 +1383,131 @@ button {
 .shared-empty-state p {
   margin: 0;
   font-size: 14px;
+}
+
+/* Welcome Screen Authentication UI */
+.welcome-auth-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.welcome-auth-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.auth-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.sign-in-button {
+  background-color: transparent;
+  border: 1px solid var(--light-border);
+  color: var(--light-text);
+}
+
+.editor-app.dark .sign-in-button {
+  border: 1px solid var(--dark-border);
+  color: var(--dark-text);
+}
+
+.sign-in-button:hover {
+  background-color: rgba(13, 153, 229, 0.05);
+  border-color: var(--light-accent);
+}
+
+.editor-app.dark .sign-in-button:hover {
+  background-color: rgba(102, 217, 239, 0.05);
+  border-color: var(--dark-accent);
+}
+
+.sign-up-button {
+  background-color: var(--light-accent);
+  color: white;
+  border: none;
+}
+
+.editor-app.dark .sign-up-button {
+  background-color: var(--dark-accent);
+}
+
+.sign-up-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(13, 153, 229, 0.2);
+}
+
+.editor-app.dark .sign-up-button:hover {
+  box-shadow: 0 2px 5px rgba(102, 217, 239, 0.2);
+}
+
+.welcome-user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background-color: rgba(13, 153, 229, 0.1);
+  border-radius: 8px;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.editor-app.dark .welcome-user-info {
+  background-color: rgba(102, 217, 239, 0.1);
+}
+
+.user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--light-accent);
+  color: white;
+}
+
+.editor-app.dark .user-avatar {
+  background-color: var(--dark-accent);
+}
+
+.welcome-user-info strong {
+  color: var(--light-accent);
+  font-weight: 600;
+}
+
+.editor-app.dark .welcome-user-info strong {
+  color: var(--dark-accent);
+}
+
+/* Responsive adjustments for auth UI */
+@media (max-width: 768px) {
+  .welcome-auth-buttons {
+    flex-direction: column;
+    width: 100%;
+    max-width: 250px;
+    margin: 10px auto 0;
+  }
+  
+  .auth-button {
+    width: 100%;
+  }
+  
+  .welcome-user-info {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px;
+  }
 } 

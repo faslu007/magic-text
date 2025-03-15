@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useAuth, useUser, useClerk } from '@clerk/clerk-react';
 
 function WelcomeScreen({ onCreateNew }) {
     const theme = useSelector((state) => state.editor?.theme) || 'dark';
     const [animatedText, setAnimatedText] = useState('');
     const [showCursor, setShowCursor] = useState(true);
     const fullText = "Your secure space for ideas, notes, and creative writing.";
+
+    // Clerk authentication
+    const { isLoaded, isSignedIn } = useAuth();
+    const { user } = useUser();
+    const clerk = useClerk();
 
     // Get time of day for personalized greeting
     const getTimeBasedGreeting = () => {
@@ -54,6 +60,26 @@ function WelcomeScreen({ onCreateNew }) {
         }
 
         return shapes;
+    };
+
+    // Get user display name or email
+    const getUserIdentifier = () => {
+        if (!isLoaded || !isSignedIn || !user) return null;
+        return user.fullName || user.primaryEmailAddress?.emailAddress || 'User';
+    };
+
+    // Handle sign in
+    const handleSignIn = () => {
+        if (isLoaded && !isSignedIn) {
+            clerk.openSignIn();
+        }
+    };
+
+    // Handle sign up
+    const handleSignUp = () => {
+        if (isLoaded && !isSignedIn) {
+            clerk.openSignUp();
+        }
     };
 
     return (
@@ -158,6 +184,49 @@ function WelcomeScreen({ onCreateNew }) {
                     </div>
                 </div>
 
+                {/* Authentication UI */}
+                <div className="welcome-auth-container">
+                    {isLoaded && (
+                        isSignedIn ? (
+                            <div className="welcome-user-info">
+                                <div className="user-avatar">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </div>
+                                <span>Logged in as <strong>{getUserIdentifier()}</strong></span>
+                            </div>
+                        ) : (
+                            <div className="welcome-auth-buttons">
+                                <button
+                                    className="auth-button sign-in-button"
+                                    onClick={handleSignIn}
+                                >
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                                        <polyline points="10 17 15 12 10 7"></polyline>
+                                        <line x1="15" y1="12" x2="3" y2="12"></line>
+                                    </svg>
+                                    <span>Sign In</span>
+                                </button>
+                                <button
+                                    className="auth-button sign-up-button"
+                                    onClick={handleSignUp}
+                                >
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="8.5" cy="7" r="4"></circle>
+                                        <line x1="20" y1="8" x2="20" y2="14"></line>
+                                        <line x1="23" y1="11" x2="17" y2="11"></line>
+                                    </svg>
+                                    <span>Sign Up</span>
+                                </button>
+                            </div>
+                        )
+                    )}
+                </div>
+
                 <div className="welcome-actions">
                     <button
                         className="welcome-button primary-button"
@@ -166,19 +235,6 @@ function WelcomeScreen({ onCreateNew }) {
                         <span className="button-icon">+</span>
                         <span>Create New Document</span>
                     </button>
-                    {/* <button
-                        className="welcome-button secondary-button"
-                        onClick={() => window.open('https://github.com/yourusername/secure-text-editor', '_blank')}
-                    >
-                        <span className="button-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                        </span>
-                        <span>Learn More</span>
-                    </button> */}
                 </div>
 
                 <div className="welcome-footer">

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createEntity, setActiveEntity, deleteEntity, toggleTheme } from '../redux/features/editorSlice';
 import { generateCreativeTitle } from '../utils';
 import { formatDistanceToNow } from 'date-fns';
-import { useAuth, useClerk } from '@clerk/clerk-react';
+import { useAuth, useClerk, UserButton } from '@clerk/clerk-react';
 
 function Sidebar() {
   const dispatch = useDispatch();
@@ -183,13 +183,19 @@ function Sidebar() {
       {/* Sidebar bottom toolbar */}
       <div className="sidebar-bottom-toolbar">
         <div className="sidebar-bottom-actions">
-          <button
-            onClick={handleAuth}
-            className="sidebar-auth-btn"
-            title={isSignedIn ? "User profile" : "Sign in"}
-          >
-            👤
-          </button>
+          {
+            isSignedIn ? (
+              <UserButton />
+            ) : (
+                <button
+                  onClick={handleAuth}
+                  className="sidebar-auth-btn"
+                  title={isSignedIn ? "User profile" : "Sign in"}
+                >
+                  👤
+                </button>
+            )
+          }
           <button
             onClick={handleToggleTheme}
             className="sidebar-theme-btn"
