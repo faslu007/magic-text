@@ -129,6 +129,12 @@ function Sidebar() {
             >
               Shared
             </button>
+            <button
+              className={`sidebar-tab ${activeTab === 'alerts' ? 'active' : ''}`}
+              onClick={() => setActiveTab('alerts')}
+            >
+              Alerts
+            </button>
           </div>
         </div>
 
@@ -174,6 +180,17 @@ function Sidebar() {
                 <div className="shared-icon">🔄</div>
                 <h3>Shared Documents</h3>
                 <p>Documents shared with you will appear here.</p>
+              </div>
+            </div>
+          )}
+
+          {/* Alerts Tab */}
+          {activeTab === 'alerts' && (
+            <div className="shared-documents-placeholder">
+              <div className="shared-empty-state">
+                <div className="shared-icon">🔔</div>
+                <h3>Alerts</h3>
+                <p>You'll receive notifications and alerts here.</p>
               </div>
             </div>
           )}
