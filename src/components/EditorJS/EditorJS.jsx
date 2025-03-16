@@ -6,6 +6,7 @@ import Code from '@editorjs/code';
 import Paragraph from '@editorjs/paragraph';
 import Marker from '@editorjs/marker';
 import InlineCode from '@editorjs/inline-code';
+import Table from '@editorjs/table';
 import DragDrop from 'editorjs-drag-drop';
 import { debounce } from 'lodash';
 import './EditorJS.css';
@@ -88,6 +89,14 @@ const EditorJSComponent = ({ onChange, entityId }) => {
                             inlineCode: {
                                 class: InlineCode,
                                 shortcut: 'CMD+SHIFT+C',
+                            },
+                            table: {
+                                class: Table,
+                                inlineToolbar: true,
+                                config: {
+                                    rows: 2,
+                                    cols: 3,
+                                }
                             }
                         },
                         data: activeEntity.textContent,

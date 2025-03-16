@@ -19,6 +19,7 @@
     "@editorjs/list": "^2.0.6",
     "@editorjs/marker": "^1.4.0",
     "@editorjs/paragraph": "^2.11.7",
+    "@editorjs/table": "^2.4.4",
     "@reduxjs/toolkit": "^2.6.1",
     "date-fns": "^4.1.0",
     "editorjs-drag-drop": "^1.1.16",
