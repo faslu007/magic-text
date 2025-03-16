@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
 
 // Generate a unique ID for this browser tab
 const browserTabId = Date.now().toString();
@@ -16,11 +17,11 @@ export const editorSlice = createSlice({
   initialState,
   reducers: {
     createEntity: (state, action) => {
-      const id = Date.now().toString();
+      const id = uuidv4();
       const newEntity = {
         id,
         name: action.payload.name || `Untitled-${state.entities.length + 1}`,
-        textContent: action.payload.textContent || '',
+        textContent: { blocks: [] },
         createdAt: new Date().toISOString(),
         modifiedAt: new Date().toISOString(),
       };
