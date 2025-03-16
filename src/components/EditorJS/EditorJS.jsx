@@ -11,6 +11,7 @@ import DragDrop from 'editorjs-drag-drop';
 import { debounce } from 'lodash';
 import './EditorJS.css';
 import { useSelector } from 'react-redux';
+import MonacoCodeTool from './tools/MonacoCodeEditor';
 
 const EditorJSComponent = ({ onChange, entityId }) => {
     const editorState = useSelector((state) => state.editor);
@@ -77,7 +78,7 @@ const EditorJSComponent = ({ onChange, entityId }) => {
                                     defaultStyle: 'unordered'
                                 }
                             },
-                            code: Code,
+                            code: MonacoCodeTool,
                             paragraph: {
                                 class: Paragraph,
                                 inlineToolbar: true,

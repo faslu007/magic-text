@@ -231,4 +231,21 @@
 
 .dark .ce-paragraph[data-placeholder]:empty::before {
   color: #a0a0a0;
+}
+
+/* Monaco Editor Styles */
+.monaco-editor-container {
+  position: relative;
+  margin: 15px 0;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #444;
+  background-color: #1e1e1e;
+  transition: height 0.2s ease;
+}
+
+.monaco-editor-wrapper {
+  width: 100%;
+  min-height: 29px; /* Minimum height for a single line of code */
+  transition: height 0.2s ease;
 } 
